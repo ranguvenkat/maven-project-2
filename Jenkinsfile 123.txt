@@ -1,18 +1,20 @@
 pipeline {
       agent any
       stages {
-            stage('Init') {
+            stage('git checkout') 
+			{
                   steps {
-                        echo 'Hi, this is venkat'
-                        echo 'We are Starting the Testing'
+                        git credentialsId: 'gitnew', url: 'https://github.com/ranguvenkat/maven.git'
                   }
             }
-            stage('Build') {
+            stage("Maven Build") 
+			{
                   steps {
-                        echo 'Building Sample Maven Project'
+                        echo "maven clean package"
                   }
             }
-            stage('Deploy') {
+            stage("depoly-dev") 
+			{
                   steps {
                         echo "Deploying in Staging Area"
                   }
