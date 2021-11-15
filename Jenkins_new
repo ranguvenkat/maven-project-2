@@ -1,0 +1,29 @@
+pipeline {
+      agent any
+      stages {
+            stage('git checkout') 
+			{
+                  steps {
+                        git credentialsId: 'gitnew', url: 'https://github.com/ranguvenkat/maven.git'
+                  }
+            }
+            stage("Maven Build") 
+			{
+                  steps {
+                        sh "maven clean package"
+						sh "mv.target/*.war target/myweb.war"
+                  }
+            }
+            stage("depoly-dev") 
+			{
+                  steps {
+                        echo "tom-cat"
+                  }
+            }
+            stage('Deploy Production') {
+                  steps {
+                        echo "Deploying in Production Area"
+                  }
+            }
+      }
+}
