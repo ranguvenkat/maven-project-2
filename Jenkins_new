@@ -4,26 +4,32 @@ pipeline {
             stage('git checkout') 
 			{
                   steps {
-                        git credentialsId: 'gitnew', url: 'https://github.com/ranguvenkat/maven.git'
+                        git credentialsId: 'git', url: 'https://github.com/ranguvenkat/maven-project-2.git'
                   }
             }
             stage("Maven Build") 
 			{
                   steps {
                         sh "maven clean package"
-						sh "mv.target/*.war target/myweb.war"
+		        sh "mv.target/*.war target/myweb.war"
                   }
             }
             stage("depoly-dev") 
 			{
                   steps {
-                        echo "tom-cat"
+                        sshagent(['tomcat']) {        
+			sh """
+	                     scp -o StrictKeyCheking-no target/myweb.war  ec2-user@172.31.34.60:/home/ec2-user/apache-tomcat-9.0.54/webapps/
+						   
+			     ssh ec2-user@172.31.34.60 /home/ec2-user/apache-tomcat-9.0.54/bin/shutdown.sh
+						   
+			     ssh ec2-user@172.31.34.60 /home/ec2-user/apache-tomcat-9.0.54/bin/startup.sh
+						   
+                           """
+			}
                   }
             }
-            stage('Deploy Production') {
-                  steps {
-                        echo "Deploying in Production Area"
-                  }
-            }
+            
+         }
       }
 }
