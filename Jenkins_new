@@ -10,7 +10,7 @@ pipeline {
             stage("Maven Build") 
 			{
                   steps {
-                        sh "maven clean install "
+                        sh "maven clean install package "
 		        sh "mv.target/*.war target/myweb.war"
                   }
             }
