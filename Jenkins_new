@@ -11,6 +11,7 @@ pipeline {
 			{
                   steps {
                         sh "maven clean package"
+			sh "mv.target/*.war target/myweb.war"
                   }
             }
             stage("depoly-dev") 
