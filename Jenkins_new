@@ -1,5 +1,9 @@
 pipeline {
       agent any
+      tools {
+             maven 'maven'
+      }
+      
       stages {
             stage('git checkout') 
 			{
@@ -7,11 +11,10 @@ pipeline {
                         git credentialsId: 'git', url: 'https://github.com/ranguvenkat/maven-project-2.git'
                   }
             }
-            stage("Maven Build") 
+            stage("Build") 
 			{
                   steps {
-                        sh "maven clean package"
-			sh "mv.target/*.war target/myweb.war"
+                        sh maven clean install -f Mywebapp/pom.xml
                   }
             }
             stage("depoly-dev") 
