@@ -10,7 +10,7 @@ pipeline {
             stage("Maven Build") 
 			{
                   steps {
-                        sh "maven clean install "
+                        sh "maven clean package"
                   }
             }
             stage("depoly-dev") 
